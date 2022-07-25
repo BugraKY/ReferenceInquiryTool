@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ReferenceInquiryTool.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,6 +7,7 @@ using System.Threading.Tasks;
 using Xamarin.CommunityToolkit.Extensions;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using ZXing.Mobile;
 using ZXing.Net.Mobile.Forms;
 
 
@@ -14,85 +16,204 @@ namespace ReferenceInquiryTool.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ScannerPage : ContentPage
     {
-        public ZXing.Result _result;
-        private string toastLabel;
-        ZXingScannerPage scanPage = new ZXingScannerPage();
-        public ScannerPage()
+        public ZXingScannerView zxing;
+        ZXingDefaultOverlay defaultOverlay = null;
+        Grid grid;
+        string mathes = "";
+        public ScannerPage() : base()
         {
-            InitializeComponent();
-            //ScanBarcode_WORKING();
-            //TestScan();
-            CHECKSCAN();
-        }
+            MobileBarcodeScanningOptions options = null;
+            View customOverlay = null;
+            QueryBarcode _query = null;
 
-        private async void ScanBarcode_WORKING()
-        {
-            var _scan = new ZXingScannerPage();
-            await Navigation.PushModalAsync(_scan);
-            _scan.OnScanResult += (result) =>
+            zxing = new ZXingScannerView
             {
-                _result = result;
-                Device.BeginInvokeOnMainThread(async () =>
-                {
-                    _result = result;
-                    await Navigation.PopModalAsync();
-                    await DisplayAlert("Referans No: ", result.Text, "OK");
-                });
+                HorizontalOptions = LayoutOptions.FillAndExpand,
+                VerticalOptions = LayoutOptions.FillAndExpand,
+                Options = options
             };
-        }
-        private async void TestScan()
-        {
-            try
-            {
-                scanPage = new ZXingScannerPage();
-                scanPage.IsScanning = true;
 
-                scanPage.OnScanResult += (result) =>
+            zxing.OnScanResult += (result) =>
+            {
+                var eh = this.OnScanResult;
+                if (eh != null)
+                    eh(result);
+                if (result != null)
+                    mathes = QueryBarcode.Where(result.Text);
+                /*
+                if (mathes != "false" || mathes != "true")
                 {
-                    // Stop scanning
-                    scanPage.IsScanning = false;
+                    DisplayAlert("ERROR", mathes, "Cancel");
+                }*/
 
-                    // Pop the page and show the result
-                    Device.BeginInvokeOnMainThread(async () =>
-                    {
-                        await Navigation.PopAsync(true);
+                //Device.BeginInvokeOnMainThread (() => eh (result));
+                Device.BeginInvokeOnMainThread(async () => await Navigation.PushModalAsync(new ResultPage(mathes, true)));
+                
+            };
 
-                        await DisplayAlert("Scanned Code", result.Text, "OK");
-                    });
-                };
-
-                await Navigation.PushAsync(scanPage);
-            }
-            catch (Exception ex)
+            if (customOverlay == null)
             {
-                await DisplayAlert("ERROR", ex.Message, "OK");
+                defaultOverlay = new ZXingDefaultOverlay
+                {
+                    TopText = "Barkod Kare alanına tamamen sığmalı ve Görüntü net olmalı.",
+                    BottomText = "Tarama otomatik olarak gerçekleşir.",
+                    ShowFlashButton = zxing.HasTorch,
+                };
+                defaultOverlay.FlashButtonClicked += (sender, e) =>
+                {
+                    zxing.IsTorchOn = !zxing.IsTorchOn;
+                };
+                Overlay = defaultOverlay;
             }
+            else
+            {
+                Overlay = customOverlay;
+            }
+
+            grid = new Grid
+            {
+                VerticalOptions = LayoutOptions.FillAndExpand,
+                HorizontalOptions = LayoutOptions.FillAndExpand,
+            };
+            grid.Children.Add(zxing);
+            grid.Children.Add(Overlay);
+
+            // The root page of your application
+            Content = grid;
         }
-        public string ToastLabel
+
+        public string DefaultOverlayTopText
         {
-            get { return toastLabel; }
+            get
+            {
+                return defaultOverlay == null ? string.Empty : defaultOverlay.TopText;
+            }
             set
             {
-                toastLabel = value;
-                OnPropertyChanged(nameof(ToastLabel)); // Notify that there was a change on this property
+                if (defaultOverlay != null)
+                    defaultOverlay.TopText = value;
             }
         }
-        private async void CHECKSCAN()
+        public string DefaultOverlayBottomText
         {
-            while (true)
+            get
             {
-                System.Threading.Thread.Sleep(5000);
-                await Task.Run(() =>
-                {
-                    if (scanPage.IsScanning)
-                    {
-                        ToastLabel = "is scaning";
-                    }
-                    else
-                    {
-                        ToastLabel = "no scan";
-                    }
-                });
+                return defaultOverlay == null ? string.Empty : defaultOverlay.BottomText;
+            }
+            set
+            {
+                if (defaultOverlay != null)
+                    defaultOverlay.BottomText = value;
+            }
+        }
+        public bool DefaultOverlayShowFlashButton
+        {
+            get
+            {
+                return defaultOverlay == null ? false : defaultOverlay.ShowFlashButton;
+            }
+            set
+            {
+                if (defaultOverlay != null)
+                    defaultOverlay.ShowFlashButton = value;
+            }
+        }
+
+        public delegate void ScanResultDelegate(ZXing.Result result);
+        public event ScanResultDelegate OnScanResult;
+
+        public View Overlay
+        {
+            get;
+            private set;
+        }
+
+        public void ToggleTorch()
+        {
+            if (zxing != null)
+                zxing.ToggleTorch();
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            zxing.IsScanning = true;
+        }
+
+        protected override void OnDisappearing()
+        {/*
+            zxing.IsScanning = false;
+            base.OnDisappearing();*/
+        }
+        public void PauseAnalysis()
+        {
+            if (zxing != null)
+                zxing.IsAnalyzing = false;
+        }
+
+        public void ResumeAnalysis()
+        {
+            if (zxing != null)
+                zxing.IsAnalyzing = true;
+        }
+
+        public void AutoFocus()
+        {
+            if (zxing != null)
+                zxing.AutoFocus();
+        }
+
+        public void AutoFocus(int x, int y)
+        {
+            if (zxing != null)
+                zxing.AutoFocus(x, y);
+            DisplayAlert("","","");
+        }
+
+        public bool IsTorchOn
+        {
+            get
+            {
+                return zxing == null ? false : zxing.IsTorchOn;
+            }
+            set
+            {
+                if (zxing != null)
+                    zxing.IsTorchOn = value;
+            }
+        }
+
+        public bool IsAnalyzing
+        {
+            get
+            {
+                return zxing == null ? false : zxing.IsAnalyzing;
+            }
+            set
+            {
+                if (zxing != null)
+                    zxing.IsAnalyzing = value;
+            }
+        }
+
+        public bool IsScanning
+        {
+            get
+            {
+                return zxing == null ? false : zxing.IsScanning;
+            }
+            set
+            {
+                if (zxing != null)
+                    zxing.IsScanning = value;
+            }
+        }
+
+        public bool HasTorch
+        {
+            get
+            {
+                return zxing == null ? false : zxing.HasTorch;
             }
         }
     }

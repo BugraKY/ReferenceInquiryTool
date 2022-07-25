@@ -13,8 +13,10 @@ namespace ReferenceInquiryTool
         {
             InitializeComponent();
 
-            DependencyService.Register<MockDataStore>();
-            MainPage = new AppShell();
+           // DependencyService.Register<MockDataStore>();
+            //MainPage = new AppShell();
+            MainPage = new AppTabbed();
+            //MainPage = new NavigationPage(new AppTabbed());
         }
 
         protected override void OnStart()
