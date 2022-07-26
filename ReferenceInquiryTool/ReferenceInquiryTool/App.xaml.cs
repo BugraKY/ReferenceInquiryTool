@@ -1,6 +1,8 @@
 ﻿using ReferenceInquiryTool.Services;
 using ReferenceInquiryTool.Views;
 using System;
+using System.Globalization;
+using System.Threading;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -17,6 +19,7 @@ namespace ReferenceInquiryTool
             //MainPage = new AppShell();
             MainPage = new AppTabbed();
             //MainPage = new NavigationPage(new AppTabbed());
+            Thread.CurrentThread.CurrentUICulture = new CultureInfo("tr-tr");
         }
 
         protected override void OnStart()

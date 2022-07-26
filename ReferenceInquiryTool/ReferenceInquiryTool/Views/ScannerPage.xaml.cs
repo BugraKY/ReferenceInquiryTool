@@ -19,9 +19,10 @@ namespace ReferenceInquiryTool.Views
         public ZXingScannerView zxing;
         ZXingDefaultOverlay defaultOverlay = null;
         Grid grid;
-        string mathes = "";
+        string matches = "";
         public ScannerPage() : base()
         {
+
             MobileBarcodeScanningOptions options = null;
             View customOverlay = null;
             QueryBarcode _query = null;
@@ -39,7 +40,11 @@ namespace ReferenceInquiryTool.Views
                 if (eh != null)
                     eh(result);
                 if (result != null)
-                    mathes = QueryBarcode.Where(result.Text);
+                {
+                    zxing.IsScanning = false;
+                    matches = QueryBarcode.Where(result.Text);
+                }
+
                 /*
                 if (mathes != "false" || mathes != "true")
                 {
@@ -47,8 +52,8 @@ namespace ReferenceInquiryTool.Views
                 }*/
 
                 //Device.BeginInvokeOnMainThread (() => eh (result));
-                Device.BeginInvokeOnMainThread(async () => await Navigation.PushModalAsync(new ResultPage(mathes, true)));
-                
+                Device.BeginInvokeOnMainThread(async () => await Navigation.PushModalAsync(new ResultPage(result.Text, matches, true)));
+
             };
 
             if (customOverlay == null)
@@ -75,11 +80,13 @@ namespace ReferenceInquiryTool.Views
                 VerticalOptions = LayoutOptions.FillAndExpand,
                 HorizontalOptions = LayoutOptions.FillAndExpand,
             };
+
             grid.Children.Add(zxing);
             grid.Children.Add(Overlay);
-
+            this.BackgroundColor = Color.Black;
             // The root page of your application
-            Content = grid;
+            //Content = grid;
+            //InitializeComponent();
         }
 
         public string DefaultOverlayTopText
@@ -138,12 +145,14 @@ namespace ReferenceInquiryTool.Views
         {
             base.OnAppearing();
             zxing.IsScanning = true;
+            Content = grid;
         }
 
         protected override void OnDisappearing()
-        {/*
+        {
             zxing.IsScanning = false;
-            base.OnDisappearing();*/
+            base.OnDisappearing();
+            Content = null;
         }
         public void PauseAnalysis()
         {
@@ -167,7 +176,7 @@ namespace ReferenceInquiryTool.Views
         {
             if (zxing != null)
                 zxing.AutoFocus(x, y);
-            DisplayAlert("","","");
+            DisplayAlert("", "", "");
         }
 
         public bool IsTorchOn
