@@ -42,6 +42,8 @@ namespace ReferenceInquiryTool.Views
                 if (result != null)
                 {
                     zxing.IsScanning = false;
+                    defaultOverlay.TopText = "Barkod tespit edildi.";
+                    defaultOverlay.BottomText = "Bir kaç saniye bekleyiniz. Kontrol ediliyor..";
                     matches = QueryBarcode.Where(result.Text);
                 }
 
@@ -52,7 +54,7 @@ namespace ReferenceInquiryTool.Views
                 }*/
 
                 //Device.BeginInvokeOnMainThread (() => eh (result));
-                Device.BeginInvokeOnMainThread(async () => await Navigation.PushModalAsync(new ResultPage(result.Text, matches, true)));
+                Device.BeginInvokeOnMainThread(async () => await Navigation.PushModalAsync(new ResultPage(result.Text, matches, QueryBarcode.IsException)));
 
             };
 
@@ -145,6 +147,8 @@ namespace ReferenceInquiryTool.Views
         {
             base.OnAppearing();
             zxing.IsScanning = true;
+            defaultOverlay.TopText = "Barkod Kare alanına tamamen sığmalı ve Görüntü net olmalı.";
+            defaultOverlay.BottomText = "Tarama otomatik olarak gerçekleşir.";
             Content = grid;
         }
 

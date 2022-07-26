@@ -14,12 +14,15 @@ namespace ReferenceInquiryTool.Services
 {
     public class QueryBarcode
     {
+        public static bool IsException = false;
         public static string Where(string result)
         {
             CookieContainer cookies = new CookieContainer();
+            string ResponseData = "";
+            IsException = false;
             try
             {
-                string webAddr = "https://localhost:5001/api/test-ocr";
+                string webAddr = "http://192.168.0.34:5000/api/test-ocr";
                 var httpWebRequest = (HttpWebRequest)WebRequest.Create(webAddr);
                 httpWebRequest.ContentType = "application/json; charset=utf-8";
                 httpWebRequest.Method = "GET";
@@ -30,16 +33,17 @@ namespace ReferenceInquiryTool.Services
                 var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
                 using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
                 {
-                    cookies.Add(httpWebRequest.CookieContainer.GetCookies(httpWebRequest.RequestUri));
+                    //cookies.Add(httpWebRequest.CookieContainer.GetCookies(httpWebRequest.RequestUri));
+                    ResponseData = streamReader.ReadToEnd();
                 }
             }
             catch (WebException ex)
             {
-                //ContentPage.DisplayAlert(ex.Message);
+                IsException = true;
                 return ex.Message;
 
             }
-            return "false";
+            return ResponseData;
         }
         public async void ALERT()
         {

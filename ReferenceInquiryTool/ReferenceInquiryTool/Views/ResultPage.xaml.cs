@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -77,11 +78,18 @@ namespace ReferenceInquiryTool.Views
         }
         public string ExceptionTranslates(string Message)
         {
+            var IpAddress = Dns.GetHostAddresses(Dns.GetHostName()).FirstOrDefault();
+            var IPAddressSTR = "";
+            if (IpAddress != null)
+            {
+                IPAddressSTR=IpAddress.ToString();
+            }
+
             var current = Connectivity.NetworkAccess;
             if (current != NetworkAccess.Internet)
                 Message = "Mobil cihazınızda aktif bir bağlantı bulunamadı. Lütfen internet bağlantınızı kontrol ediniz.";
             if (Message == "Error: ConnectFailure (Connection refused)")
-                Message = "Bağlantı Hatası (Bağlantı reddedildi veya Sunucu bakımı olduğundan erişilemiyor. Lütfen bir kaç dakika sonra tekrar deneyiniz.)";
+                Message = "Bağlantı Hatası (Bağlantı reddedildi veya Sunucu bakımı olduğundan erişilemiyor. Lütfen bir kaç dakika sonra tekrar deneyiniz.) Local IP: "+ IPAddressSTR;
             return Message;
         }
     }
