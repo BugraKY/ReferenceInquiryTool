@@ -22,14 +22,11 @@ namespace ReferenceInquiryTool.Services
         {
             Verifications _verification=null;
             CookieContainer cookies = new CookieContainer();
-            object ResponseData = null;
-            //IsException = false;
             
             try
             {
-                char oldC = '\\', empC = '\0';
-                string webAddr = "http://192.168.0.34:5000/api/rv/query-reference/" + result;
-                //string webAddr = "http://213.238.181.203/api/rv/query-reference/" + result;
+                //string webAddr = "http://192.168.0.34:5000/api/rv/query-reference/" + result;
+                string webAddr = "http://213.238.181.203/api/rv/query-reference/" + result;
                 var httpWebRequest = (HttpWebRequest)WebRequest.Create(webAddr);
                 httpWebRequest.ContentType = "application/json; charset=utf-8";
                 httpWebRequest.Method = "GET";
@@ -39,21 +36,12 @@ namespace ReferenceInquiryTool.Services
                 using (var streamReader = new StreamReader(httpResponse.GetResponseStream(),Encoding.UTF8))
                 {
                     cookies.Add(httpWebRequest.CookieContainer.GetCookies(httpWebRequest.RequestUri));
-                    //var _readedSTR = JsonDocument.Parse(streamReader.ReadToEnd());
-
-                    string _readedEnumChar = streamReader.ReadToEnd();//.Replace("\"", "'");
-
+                    string _readedEnumChar = streamReader.ReadToEnd();
                     using (var ms = new MemoryStream(Encoding.Unicode.GetBytes(_readedEnumChar)))
                     {
-                        // Deserialization from JSON
                         DataContractJsonSerializer deserializer = new DataContractJsonSerializer(typeof(Verifications));
                         _verification = (Verifications)deserializer.ReadObject(ms);
-
-                        //httpResponse.Write("Id: " + _verification.Id); // Name: C-sharpcorner
-                        //Response.Write("Description: " + _verification.Description); // Description: Share Knowledge
                     }
-
-                    //var jsonFormat = JsonSerializer.Deserialize<Verifications>((string)_readedEnumChar);
                 }
                 if (_verification == null)
                 {
@@ -67,16 +55,14 @@ namespace ReferenceInquiryTool.Services
             }
             catch (WebException ex)
             {
-                _verification.IsException = true;
-                _verification.Exception = ex;
+                _verification = new Verifications()
+                {
+                    IsException = true,
+                    Exception = ex
+                };
                 return _verification;
-
             }
             return _verification;
-        }
-        public async void ALERT()
-        {
-            //Navigation.PopAsync(new ResultPage(""));
         }
     }
 }

@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Xamarin.CommunityToolkit.Extensions;
 using Xamarin.Forms;
@@ -20,13 +21,11 @@ namespace ReferenceInquiryTool.Views
         public ZXingScannerView zxing;
         ZXingDefaultOverlay defaultOverlay = null;
         Grid grid;
-        string matches = "";
         public ScannerPage() : base()
         {
 
             MobileBarcodeScanningOptions options = null;
             View customOverlay = null;
-            QueryBarcode _query = null;
             Verifications _verification = new Verifications();
 
             zxing = new ZXingScannerView

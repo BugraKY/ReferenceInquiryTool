@@ -15,39 +15,75 @@ namespace ReferenceInquiryTool.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ResultPage : ContentPage
     {
-        Label labelMatches = new Label
+        Label label_OK = new Label
         {
-            Text = "Eşleşiyor. Kontrol et.",
+            Text = "/!\\ OK /!\\",
             TextColor = Color.FromHex("#2AA377"),
             FontSize = 30,
-            VerticalOptions = LayoutOptions.CenterAndExpand,
-            HorizontalOptions = LayoutOptions.CenterAndExpand
+            Padding = new Thickness(0,100,0,0),
+            VerticalOptions = LayoutOptions.Start,
+            HorizontalOptions = LayoutOptions.Center
         };
-        Label labelNotMatches = new Label
+        Label label_NOK = new Label
         {
-            Text = "Eşleşmiyor. Kontrol etme.",
+            Text = "/!\\ DİKKAT /!\\",
             TextColor = Color.FromHex("#B6174B"),
             FontSize = 30,
-            VerticalOptions = LayoutOptions.CenterAndExpand,
+            Padding = new Thickness(0, 100, 0, 0),
+            VerticalOptions = LayoutOptions.Start,
+            HorizontalOptions = LayoutOptions.Center
+        };
+        Label labelMatches_OK = new Label
+        {
+            Text = "Eşleşiyor.",
+            TextColor = Color.FromHex("#2AA377"),
+            FontSize = 30,
+            Padding = new Thickness(0, 50, 0, 0),
+            VerticalOptions = LayoutOptions.Start,
+            HorizontalOptions = LayoutOptions.Center
+        };
+        Label labelMatches_NOK = new Label
+        {
+            Text = "Eşleşmiyor.",
+            TextColor = Color.FromHex("#B6174B"),
+            FontSize = 30,
+            Padding = new Thickness(0, 50, 0, 0),
+            VerticalOptions = LayoutOptions.Start,
+            HorizontalOptions = LayoutOptions.Center
+        };
+        Label labelCheck_OK = new Label
+        {
+            Text = "Kontrol et.",
+            TextColor = Color.FromHex("#2AA377"),
+            FontSize = 30,
+            VerticalOptions = LayoutOptions.StartAndExpand,
             HorizontalOptions = LayoutOptions.CenterAndExpand
         };
-        Label labelResultGreen = new Label
+        Label labelCheck_NOK = new Label
+        {
+            Text = "Kontrol etme.",
+            TextColor = Color.FromHex("#B6174B"),
+            FontSize = 30,
+            VerticalOptions = LayoutOptions.StartAndExpand,
+            HorizontalOptions = LayoutOptions.CenterAndExpand
+        };
+        Label labelResult_OK = new Label
         {
             Text = "",
             TextColor = Color.FromHex("#2AA377"),
-            FontSize = 15,
+            FontSize = 20,
             VerticalOptions = LayoutOptions.CenterAndExpand,
             HorizontalOptions = LayoutOptions.CenterAndExpand
         };
-        Label labelResultRed = new Label
+        Label labelResult_NOK = new Label
         {
             Text = "",
             TextColor = Color.FromHex("#B6174B"),
-            FontSize = 15,
+            FontSize = 20,
             VerticalOptions = LayoutOptions.CenterAndExpand,
             HorizontalOptions = LayoutOptions.CenterAndExpand
         };
-
+        StackLayout layout;
         public ResultPage(Verifications _verification)
         {
             InitializeComponent();
@@ -59,24 +95,30 @@ namespace ReferenceInquiryTool.Views
         }
         public void ShowResult(Verifications _verification)
         {
-            labelResultGreen.Text = _verification.ReferenceNum;
-            labelResultRed.Text = _verification.ReferenceNum;
-
-            var layout = new StackLayout { Padding = new Thickness(5, 10) };
+            labelResult_OK.Text = _verification.ReferenceNum;
+            labelResult_NOK.Text = _verification.ReferenceNum;
+            layout = new StackLayout { Padding = new Thickness(5, 10) };
             if (_verification.IsException)
-                BarcodeException(_verification.Exception.Message);
-
-            if (_verification.Active)
             {
-                layout.Children.Add(labelMatches);
-                layout.Children.Add(labelResultGreen);
+                BarcodeException(_verification.Exception.Message);
             }
             else
             {
-                layout.Children.Add(labelNotMatches);
-                layout.Children.Add(labelResultRed);
+                if (_verification.Active)
+                {
+                    layout.Children.Add(label_OK);
+                    layout.Children.Add(labelMatches_OK);
+                    layout.Children.Add(labelCheck_OK);
+                    layout.Children.Add(labelResult_OK);
+                }
+                else
+                {
+                    layout.Children.Add(label_NOK);
+                    layout.Children.Add(labelMatches_NOK);
+                    layout.Children.Add(labelCheck_NOK);
+                    layout.Children.Add(labelResult_NOK);
+                }
             }
-
             this.Content = layout;
         }
         public void Quit()
@@ -85,9 +127,9 @@ namespace ReferenceInquiryTool.Views
         }
         public void BarcodeException(string Message)
         {
-            labelMatches.TextColor = Color.FromHex("#B6174B");
-            labelResultGreen.TextColor = Color.FromHex("#B6174B");
-            labelMatches.Text = ExceptionTranslates(Message);
+            labelResult_OK.Text = ExceptionTranslates(Message);
+            layout.Children.Add(labelResult_OK);
+            layout.Children.Add(labelResult_NOK);
         }
         public string ExceptionTranslates(string Message)
         {
@@ -100,7 +142,9 @@ namespace ReferenceInquiryTool.Views
 
             var current = Connectivity.NetworkAccess;
             if (current != NetworkAccess.Internet)
-                Message = "Mobil cihazınızda aktif bir bağlantı bulunamadı. Lütfen internet bağlantınızı kontrol ediniz.";
+            {
+                return "Mobil cihazınızda aktif bir bağlantı bulunamadı. Lütfen internet bağlantınızı kontrol ediniz.";
+            }
             if (Message == "Error: ConnectFailure (Connection refused)")
                 Message = "Bağlantı Hatası (Bağlantı reddedildi veya Sunucu bakımı olduğundan erişilemiyor. Lütfen bir kaç dakika sonra tekrar deneyiniz.) Local IP: "+ IPAddressSTR;
             return Message;
