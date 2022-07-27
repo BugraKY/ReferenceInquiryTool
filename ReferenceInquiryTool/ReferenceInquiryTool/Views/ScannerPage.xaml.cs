@@ -1,4 +1,5 @@
-﻿using ReferenceInquiryTool.Services;
+﻿using ReferenceInquiryTool.Models;
+using ReferenceInquiryTool.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -44,7 +45,9 @@ namespace ReferenceInquiryTool.Views
                     zxing.IsScanning = false;
                     defaultOverlay.TopText = "Barkod tespit edildi.";
                     defaultOverlay.BottomText = "Bir kaç saniye bekleyiniz. Kontrol ediliyor..";
-                    matches = QueryBarcode.Where(result.Text);
+                    var _obj = QueryBarcode.Where(result.Text);
+                    var _verification = (Verifications)_obj;
+                    //matches = QueryBarcode.Where(result.Text);
                 }
 
                 /*

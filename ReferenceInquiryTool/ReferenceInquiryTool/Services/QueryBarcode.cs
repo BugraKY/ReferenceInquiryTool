@@ -1,4 +1,5 @@
-﻿using ReferenceInquiryTool.Views;
+﻿using ReferenceInquiryTool.Models;
+using ReferenceInquiryTool.Views;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -15,14 +16,15 @@ namespace ReferenceInquiryTool.Services
     public class QueryBarcode
     {
         public static bool IsException = false;
-        public static string Where(string result)
+        public static object Where(string result)
         {
             CookieContainer cookies = new CookieContainer();
-            string ResponseData = "";
+            object ResponseData = null;
             IsException = false;
             try
             {
-                string webAddr = "http://192.168.0.34:5000/api/test-ocr";
+                string webAddr = "http://192.168.0.34:5000/api/rv/query-reference/" + result;
+                //string webAddr = "http://213.238.181.203/api/rv/query-reference/" + result;
                 var httpWebRequest = (HttpWebRequest)WebRequest.Create(webAddr);
                 httpWebRequest.ContentType = "application/json; charset=utf-8";
                 httpWebRequest.Method = "GET";
@@ -34,7 +36,13 @@ namespace ReferenceInquiryTool.Services
                 using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
                 {
                     //cookies.Add(httpWebRequest.CookieContainer.GetCookies(httpWebRequest.RequestUri));
-                    ResponseData = streamReader.ReadToEnd();
+                    var _readedSTR = (json)streamReader.ReadToEnd();
+                    string[] _array = _readedSTR.Split(@"\".ToCharArray());
+                    foreach (var item in _array)
+                    {
+                        ResponseData += item;
+                    }
+                    //ResponseData = new HashSet<char>("/");
                 }
             }
             catch (WebException ex)
