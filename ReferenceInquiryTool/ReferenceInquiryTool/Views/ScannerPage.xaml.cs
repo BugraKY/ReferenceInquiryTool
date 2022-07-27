@@ -27,6 +27,7 @@ namespace ReferenceInquiryTool.Views
             MobileBarcodeScanningOptions options = null;
             View customOverlay = null;
             QueryBarcode _query = null;
+            Verifications _verification = new Verifications();
 
             zxing = new ZXingScannerView
             {
@@ -45,19 +46,9 @@ namespace ReferenceInquiryTool.Views
                     zxing.IsScanning = false;
                     defaultOverlay.TopText = "Barkod tespit edildi.";
                     defaultOverlay.BottomText = "Bir kaç saniye bekleyiniz. Kontrol ediliyor..";
-                    var _obj = QueryBarcode.Where(result.Text);
-                    var _verification = (Verifications)_obj;
-                    //matches = QueryBarcode.Where(result.Text);
+                    _verification = QueryBarcode.Where(result.Text);
                 }
-
-                /*
-                if (mathes != "false" || mathes != "true")
-                {
-                    DisplayAlert("ERROR", mathes, "Cancel");
-                }*/
-
-                //Device.BeginInvokeOnMainThread (() => eh (result));
-                Device.BeginInvokeOnMainThread(async () => await Navigation.PushModalAsync(new ResultPage(result.Text, matches, QueryBarcode.IsException)));
+                Device.BeginInvokeOnMainThread(async () => await Navigation.PushModalAsync(new ResultPage(_verification)));
 
             };
 

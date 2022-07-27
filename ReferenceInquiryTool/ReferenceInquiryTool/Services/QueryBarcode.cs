@@ -4,7 +4,9 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
+using System.Runtime.Serialization.Json;
 using System.Text;
+using System.Text.Json;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using ZXing.Mobile;
@@ -16,13 +18,16 @@ namespace ReferenceInquiryTool.Services
     public class QueryBarcode
     {
         public static bool IsException = false;
-        public static object Where(string result)
+        public static Verifications Where(string result)
         {
+            Verifications _verification=null;
             CookieContainer cookies = new CookieContainer();
             object ResponseData = null;
-            IsException = false;
+            //IsException = false;
+            
             try
             {
+                char oldC = '\\', empC = '\0';
                 string webAddr = "http://192.168.0.34:5000/api/rv/query-reference/" + result;
                 //string webAddr = "http://213.238.181.203/api/rv/query-reference/" + result;
                 var httpWebRequest = (HttpWebRequest)WebRequest.Create(webAddr);
@@ -30,28 +35,44 @@ namespace ReferenceInquiryTool.Services
                 httpWebRequest.Method = "GET";
                 httpWebRequest.CookieContainer = cookies;
                 httpWebRequest.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
-                httpWebRequest.Headers.Add("X-Requested-With", "XMLHttpRequest");
-
                 var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
-                using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                using (var streamReader = new StreamReader(httpResponse.GetResponseStream(),Encoding.UTF8))
                 {
-                    //cookies.Add(httpWebRequest.CookieContainer.GetCookies(httpWebRequest.RequestUri));
-                    var _readedSTR = (json)streamReader.ReadToEnd();
-                    string[] _array = _readedSTR.Split(@"\".ToCharArray());
-                    foreach (var item in _array)
+                    cookies.Add(httpWebRequest.CookieContainer.GetCookies(httpWebRequest.RequestUri));
+                    //var _readedSTR = JsonDocument.Parse(streamReader.ReadToEnd());
+
+                    string _readedEnumChar = streamReader.ReadToEnd();//.Replace("\"", "'");
+
+                    using (var ms = new MemoryStream(Encoding.Unicode.GetBytes(_readedEnumChar)))
                     {
-                        ResponseData += item;
+                        // Deserialization from JSON
+                        DataContractJsonSerializer deserializer = new DataContractJsonSerializer(typeof(Verifications));
+                        _verification = (Verifications)deserializer.ReadObject(ms);
+
+                        //httpResponse.Write("Id: " + _verification.Id); // Name: C-sharpcorner
+                        //Response.Write("Description: " + _verification.Description); // Description: Share Knowledge
                     }
-                    //ResponseData = new HashSet<char>("/");
+
+                    //var jsonFormat = JsonSerializer.Deserialize<Verifications>((string)_readedEnumChar);
                 }
+                if (_verification == null)
+                {
+                    _verification = new Verifications()
+                    {
+                        ReferenceCode = result,
+                        ReferenceNum = result
+                    };
+                }
+
             }
             catch (WebException ex)
             {
-                IsException = true;
-                return ex.Message;
+                _verification.IsException = true;
+                _verification.Exception = ex;
+                return _verification;
 
             }
-            return ResponseData;
+            return _verification;
         }
         public async void ALERT()
         {

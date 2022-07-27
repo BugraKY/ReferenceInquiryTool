@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ReferenceInquiryTool.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -47,23 +48,35 @@ namespace ReferenceInquiryTool.Views
             HorizontalOptions = LayoutOptions.CenterAndExpand
         };
 
-        public ResultPage(string _result, string _matches, bool exception)
+        public ResultPage(Verifications _verification)
         {
             InitializeComponent();
-            ShowResult(_result, _matches, exception);
+            ShowResult(_verification);
         }
         private async void Quit_Clicked(object sender, EventArgs e)
         {
             await Application.Current.MainPage.Navigation.PopAsync();
         }
-        public void ShowResult(string _result, string _matches, bool exception)
+        public void ShowResult(Verifications _verification)
         {
-            labelResultGreen.Text = _result;
+            labelResultGreen.Text = _verification.ReferenceNum;
+            labelResultRed.Text = _verification.ReferenceNum;
+
             var layout = new StackLayout { Padding = new Thickness(5, 10) };
-            if (exception)
-                BarcodeException(_matches);
-            layout.Children.Add(labelMatches);
-            layout.Children.Add(labelResultGreen);
+            if (_verification.IsException)
+                BarcodeException(_verification.Exception.Message);
+
+            if (_verification.Active)
+            {
+                layout.Children.Add(labelMatches);
+                layout.Children.Add(labelResultGreen);
+            }
+            else
+            {
+                layout.Children.Add(labelNotMatches);
+                layout.Children.Add(labelResultRed);
+            }
+
             this.Content = layout;
         }
         public void Quit()
