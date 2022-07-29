@@ -8,7 +8,7 @@ using System.Net;
 
 namespace ReferenceInquiryTool.Droid
 {
-    [Activity(Label = "ReferenceInquiryTool", Icon = "@mipmap/icon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation | ConfigChanges.UiMode | ConfigChanges.ScreenLayout | ConfigChanges.SmallestScreenSize)]
+    [Activity(Label = "Expert Barkod Okuyucu", Icon = "@mipmap/icon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize-200 | ConfigChanges.Orientation-25 | ConfigChanges.UiMode-100 | ConfigChanges.ScreenLayout-50 | ConfigChanges.SmallestScreenSize-400)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
         protected override void OnCreate(Bundle savedInstanceState)
@@ -25,7 +25,7 @@ namespace ReferenceInquiryTool.Droid
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             ZXing.Net.Mobile.Forms.Android.Platform.Init();
             LoadApplication(new App());
-            Window.SetStatusBarColor(_colorPrimary);
+            Window.SetNavigationBarColor(_colorPrimary);
         }
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {

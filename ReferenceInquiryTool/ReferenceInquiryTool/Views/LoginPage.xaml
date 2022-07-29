@@ -5,10 +5,16 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              x:Class="ReferenceInquiryTool.Views.LoginPage"
-             Shell.NavBarIsVisible="False">
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="White">
     <ContentPage.Content>
-        <StackLayout Padding="10,0,10,0" VerticalOptions="Center">
-            <Button VerticalOptions="Center" Text="Login" Command="{Binding LoginCommand}"/>
+        <StackLayout Padding="10,0,10,0" VerticalOptions="StartAndExpand">
+            <ContentView Padding="0,40,0,40" VerticalOptions="StartAndExpand">
+                <Image Source="app_logo.png" VerticalOptions="StartAndExpand" HeightRequest="64" />
+            </ContentView>
+            <Entry Placeholder="Kullanıcı Adı" PlaceholderColor="Gray" VerticalOptions="Center" x:Name="Username" />
+            <Entry Placeholder="Şifre" IsPassword="True" PlaceholderColor="Gray" VerticalOptions="Center" x:Name="Password" />
+            <Button VerticalOptions="Center" Text="Giriş" Clicked="Button_Clicked" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

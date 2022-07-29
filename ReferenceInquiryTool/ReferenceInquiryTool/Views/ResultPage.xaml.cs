@@ -127,8 +127,7 @@ namespace ReferenceInquiryTool.Views
         }
         public void BarcodeException(string Message)
         {
-            labelResult_OK.Text = ExceptionTranslates(Message);
-            layout.Children.Add(labelResult_OK);
+            labelResult_NOK.Text = ExceptionTranslates(Message);
             layout.Children.Add(labelResult_NOK);
         }
         public string ExceptionTranslates(string Message)

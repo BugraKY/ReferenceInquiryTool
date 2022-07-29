@@ -15,9 +15,15 @@ namespace ReferenceInquiryTool
         {
             InitializeComponent();
 
-           // DependencyService.Register<MockDataStore>();
+            // DependencyService.Register<MockDataStore>();
             //MainPage = new AppShell();
-            MainPage = new AppTabbed();
+
+
+
+            //MainPage = new AppTabbed();
+
+            MainPage = new LoginPage();
+
             //MainPage = new NavigationPage(new AppTabbed());
             Thread.CurrentThread.CurrentUICulture = new CultureInfo("tr-tr");
         }

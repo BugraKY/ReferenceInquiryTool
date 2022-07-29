@@ -3,26 +3,32 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ReferenceInquiryTool.Views.InputPage">
     <ContentPage.Content>
-        <StackLayout Padding="20,50">
+        <StackLayout Padding="20,100">
+
             <!--
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />-->
-            
-            
+            <Picker Title="Referans kodu seçin.." 
+                    x:Name="pickerCode" >
+                <Picker.Items>
+                    <x:String>REF</x:String>
+                    <x:String>SEVK</x:String>
+                </Picker.Items>
+
+            </Picker>
+            -->
             <Label Text="Referans Kodu: "
                    VerticalOptions="Start"
                    HorizontalOptions="Start"
                    FontSize="Large"/>
 
-            <Entry Text="" Placeholder="REF01"/>
-            
+            <Entry Text="" Placeholder="REF01" x:Name="referenceCode" />
+
             <Label Text="Referans No: "
                    VerticalOptions="Start"
                    HorizontalOptions="Start"
                    FontSize="Large"/>
 
-            <Entry Text="" Placeholder="99999999"/>
+            <Entry Text="" Placeholder="99999999" x:Name="referenceNum"/>
+            <Button Text="Sorgula" Clicked="Button_Clicked"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
