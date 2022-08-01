@@ -11,6 +11,7 @@ using System.Runtime.Serialization.Json;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using System.Xml;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -37,6 +38,7 @@ namespace ReferenceInquiryTool.Views
         }
         private async void LoginPostAsync()
         {
+            Username.Text = Username.Text.Replace(" ", "");
             User _user = new User();
             UserStatic.UserName = Username.Text;
 
@@ -86,6 +88,8 @@ namespace ReferenceInquiryTool.Views
                         await Navigation.PushModalAsync(new AppTabbed());
                     else
                         await DisplayAlert("Kimlik doğrulama", "Kullanıcı dondurulmuş. Bunun doğru olmadığını düşünüyor ve aktif personelseniz lütfen IK ile iletişime geçiniz.", "Tamam");
+                    //WriteXML(UserStatic.UserName);
+                    ReadXML();
                 }
 
             }
@@ -95,6 +99,41 @@ namespace ReferenceInquiryTool.Views
             }
 
             //await Navigation.PushModalAsync(new AppTabbed());
+        }
+
+        private void WriteXML(string username)
+        {
+            XmlDocument doc = new XmlDocument();
+            XmlElement el = (XmlElement)doc.AppendChild(doc.CreateElement("User"));
+            el.SetAttribute("username", username);
+
+            var documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+            var filePath = Path.Combine(documentsPath, "expert_config.xml");
+
+            File.WriteAllText(filePath, doc.ToString());
+
+            //username için txt yapılabilir.
+
+
+        }
+        private void ReadXML()
+        {
+            XmlDocument doc = new XmlDocument();
+            //XmlTextReader docReader;
+            var documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+            var filePath = Path.Combine(documentsPath, "expert_config.xml");
+
+            XmlTextReader reader = new XmlTextReader(filePath);
+            var username = "";
+            doc.LoadXml(documentsPath);/*
+            while (reader.Read())
+            {
+                username = reader.Name;
+            }*/
+
+            //string readed = File.ReadAllText(filePath);
+
+            //return null;
         }
     }
 }
