@@ -45,8 +45,8 @@ namespace ReferenceInquiryTool.Views
 
             try
             {
-                string webAddr = "http://192.168.0.34:5000/api/rv/login-post/";
-                //string webAddr = "http://213.238.181.203/api/rv/login-post/";
+                string webAddr = IpDefinition.Local + "/api/rv/login-post/";
+                //string webAddr = IpDefinition.Dedicated+"/api/rv/login-post/";
 
                 var request = (HttpWebRequest)WebRequest.Create(webAddr);
 
@@ -76,6 +76,7 @@ namespace ReferenceInquiryTool.Views
                         DataContractJsonSerializer deserializer = new DataContractJsonSerializer(typeof(User));
                         _user = (User)deserializer.ReadObject(ms);
                     }
+                    UserStatic.Id = _user.Id.ToString();
                     UserStatic.UserName = _user.UserName;
                     UserStatic.FullName = _user.FullName;
                     UserStatic.Admin = _user.Admin;

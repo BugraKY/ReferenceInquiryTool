@@ -1,4 +1,5 @@
 ﻿using ReferenceInquiryTool.Models;
+using ReferenceInquiryTool.Models.Statics;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -53,8 +54,8 @@ namespace ReferenceInquiryTool.Views
 
                 try
                 {
-                    //string webAddr = "http://192.168.0.34:5000/api/rv/query-manual/code/" + _verification.ReferenceCode + "/num/" + _verification.ReferenceNum;
-                    string webAddr = "http://213.238.181.203/api/rv/query-manual/code/" + _verification.ReferenceCode+"/num/"+_verification.ReferenceNum;
+                    string webAddr = IpDefinition.Local + "/api/rv/query-manual/code/" + _verification.ReferenceCode + "/num/" + _verification.ReferenceNum + "/user/" + UserStatic.Id;
+                    //string webAddr = IpDefinition.Dedicated + "/api/rv/query-manual/code/" + _verification.ReferenceCode + "/num/" + _verification.ReferenceNum + "/user/" + UserStatic.Id;
                     var httpWebRequest = (HttpWebRequest)WebRequest.Create(webAddr);
                     httpWebRequest.ContentType = "application/json; charset=utf-8";
                     httpWebRequest.Method = "GET";
