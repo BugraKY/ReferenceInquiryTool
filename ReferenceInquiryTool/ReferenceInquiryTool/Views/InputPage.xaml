@@ -18,16 +18,17 @@
             <Label Text="Referans Kodu: "
                    VerticalOptions="Start"
                    HorizontalOptions="Start"
-                   FontSize="Large"/>
+                   FontSize="Large"
+                   TextColor="Black"/>
 
-            <Entry Text="" Placeholder="REF01" x:Name="referenceCode" />
+            <Entry Text="" Placeholder="REF01" x:Name="referenceCode" TextColor="Black" PlaceholderColor="Gray" />
 
             <Label Text="Referans No: "
                    VerticalOptions="Start"
                    HorizontalOptions="Start"
                    FontSize="Large"/>
 
-            <Entry Text="" Placeholder="99999999" x:Name="referenceNum"/>
+            <Entry Text="" Placeholder="99999999" x:Name="referenceNum" TextColor="Black" PlaceholderColor="Gray"/>
             <Button Text="Sorgula" Clicked="Button_Clicked"/>
         </StackLayout>
     </ContentPage.Content>

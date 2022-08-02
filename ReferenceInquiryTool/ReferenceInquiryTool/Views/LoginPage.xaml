@@ -12,9 +12,17 @@
             <ContentView Padding="0,40,0,40" VerticalOptions="StartAndExpand">
                 <Image Source="app_logo.png" VerticalOptions="StartAndExpand" HeightRequest="64" />
             </ContentView>
-            <Entry Placeholder="Kullanıcı Adı" PlaceholderColor="Gray" VerticalOptions="Center" x:Name="Username" />
+            <Entry Placeholder="Kullanıcı Adı"
+                   PlaceholderColor="Gray"
+                   VerticalOptions="Center"
+                   ClearButtonVisibility="Never"
+                   IsSpellCheckEnabled="False"
+                   IsTextPredictionEnabled="False"
+                   Keyboard="Default"
+                   x:Name="Username"/>
+
             <Entry Placeholder="Şifre" IsPassword="True" PlaceholderColor="Gray" VerticalOptions="Center" x:Name="Password" />
-            <Button VerticalOptions="Center" Text="Giriş" Clicked="Button_Clicked" />
+            <Button VerticalOptions="Center" Text="Giriş" Clicked="Button_Clicked" x:Name="LoginButton"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

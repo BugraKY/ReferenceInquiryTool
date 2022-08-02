@@ -29,12 +29,44 @@ namespace ReferenceInquiryTool.Views
         public void LoginSuccess()
         {
             //this.BindingContext = new AppTabbed();
-            this.BindingContext = new AppTabbed();
+            //this.BindingContext = new AppTabbed();
+            try
+            {
+                Username.Text = ReadUser();
+            }
+            catch (Exception)
+            {
+
+                return;
+            }
+
         }
 
-        private void Button_Clicked(object sender, EventArgs e)
+        private async void Button_Clicked(object sender, EventArgs e)
         {
+            await FormDisable();
             LoginPostAsync();
+            //ButtonEnable();
+
+        }
+        private async Task<bool> FormDisable()
+        {
+            LoginButton.IsEnabled = false;
+            LoginButton.Text = "...";
+            Username.IsEnabled = false;
+            Password.IsEnabled = false;
+            await Task.Delay(1);
+            return true;
+        }
+        private async Task<bool> FormEnable()
+        {
+            await Task.Delay(1000);
+            LoginButton.IsEnabled = true;
+            LoginButton.Text = "GİRİŞ";
+            Username.IsEnabled = true;
+            Password.IsEnabled = true;
+            Password.Text = "";
+            return true;
         }
         private async void LoginPostAsync()
         {
@@ -89,7 +121,8 @@ namespace ReferenceInquiryTool.Views
                     else
                         await DisplayAlert("Kimlik doğrulama", "Kullanıcı dondurulmuş. Bunun doğru olmadığını düşünüyor ve aktif personelseniz lütfen IK ile iletişime geçiniz.", "Tamam");
                     //WriteXML(UserStatic.UserName);
-                    ReadXML();
+                    //WriteXML(UserStatic.UserName);
+                    WriteUser(UserStatic.UserName);
                 }
 
             }
@@ -98,42 +131,24 @@ namespace ReferenceInquiryTool.Views
                 await DisplayAlert("Hata", ex.Message, "tamam");
             }
 
+            await FormEnable();
+
             //await Navigation.PushModalAsync(new AppTabbed());
         }
 
-        private void WriteXML(string username)
+        private void WriteUser(string username)
         {
-            XmlDocument doc = new XmlDocument();
-            XmlElement el = (XmlElement)doc.AppendChild(doc.CreateElement("User"));
-            el.SetAttribute("username", username);
-
+            Password.Text = "";
             var documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
-            var filePath = Path.Combine(documentsPath, "expert_config.xml");
-
-            File.WriteAllText(filePath, doc.ToString());
-
+            var filePath = Path.Combine(documentsPath, "username.exp");
+            File.WriteAllText(filePath, username);
             //username için txt yapılabilir.
-
-
         }
-        private void ReadXML()
+        private string ReadUser()
         {
-            XmlDocument doc = new XmlDocument();
-            //XmlTextReader docReader;
             var documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
-            var filePath = Path.Combine(documentsPath, "expert_config.xml");
-
-            XmlTextReader reader = new XmlTextReader(filePath);
-            var username = "";
-            doc.LoadXml(documentsPath);/*
-            while (reader.Read())
-            {
-                username = reader.Name;
-            }*/
-
-            //string readed = File.ReadAllText(filePath);
-
-            //return null;
+            var filePath = Path.Combine(documentsPath, "username.exp");
+            return File.ReadAllText(filePath);
         }
     }
 }

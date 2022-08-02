@@ -29,9 +29,9 @@
         </StackLayout>
         <ScrollView Grid.Row="1">
             <StackLayout Orientation="Vertical" Padding="30,24,30,24" Spacing="10">
-                <Label Text="Expert Quality Services" FontSize="Title"/>
-                <Label Text="Referans doğrulama uygulamasına hoşgeldiniz. Bu uygulama Expert Quality Services personelleri için kodlanmıştır." FontSize="16" Padding="0,0,0,0"/>
-                <Label FontSize="16" Padding="0,24,0,0">
+                <Label Text="Expert Quality Services" FontSize="Title" TextColor="Black" />
+                <Label Text="Referans doğrulama uygulamasına hoşgeldiniz. Bu uygulama Expert Quality Services personelleri için kodlanmıştır." FontSize="16" Padding="0,0,0,0" TextColor="Black"/>
+                <Label FontSize="16" Padding="0,24,0,0" TextColor="Black">
                     <!--
                     <Label.FormattedText>
                         <FormattedString>
@@ -44,10 +44,10 @@
                     -->
                 </Label>
 
-                <Label Text="Yetkili Personel: " FontSize="Title"/>
-                <Label Text="" FontSize="Body" x:Name="pers_FullName_lbl"/>
+                <Label Text="Yetkili Personel: " FontSize="Title" TextColor="Black"/>
+                <Label Text="" FontSize="Body" x:Name="pers_FullName_lbl" TextColor="Black"/>
 
-                <Label Text="Tanımlı Referanslar" FontSize="Title" />
+                <Label Text="Tanımlı Referanslar" FontSize="Title" TextColor="Black"/>
                 <ListView x:Name="references">
                     <ListView.ItemsSource>
                         <x:Array Type="{x:Type x:String}" x:Name="reference_array">
