@@ -54,8 +54,8 @@ namespace ReferenceInquiryTool.Views
 
                 try
                 {
-                    string webAddr = IpDefinition.Local + "/api/rv/query-manual/code/" + _verification.ReferenceCode + "/num/" + _verification.ReferenceNum + "/user/" + UserStatic.Id;
-                    //string webAddr = IpDefinition.Dedicated + "/api/rv/query-manual/code/" + _verification.ReferenceCode + "/num/" + _verification.ReferenceNum + "/user/" + UserStatic.Id;
+                    //string webAddr = IpDefinition.Local + "/api/rv/query-manual/code/" + _verification.ReferenceCode + "/num/" + _verification.ReferenceNum + "/user/" + UserStatic.Id;
+                    string webAddr = IpDefinition.Dedicated + "/api/rv/query-manual/code/" + _verification.ReferenceCode + "/num/" + _verification.ReferenceNum + "/user/" + UserStatic.Id;
                     var httpWebRequest = (HttpWebRequest)WebRequest.Create(webAddr);
                     httpWebRequest.ContentType = "application/json; charset=utf-8";
                     httpWebRequest.Method = "GET";

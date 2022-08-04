@@ -20,7 +20,7 @@ namespace ReferenceInquiryTool.Views
         public AboutPage()
         {
             InitializeComponent();
-            GetReferences();
+            //GetReferences();
             pers_FullName_lbl.Text = Models.Statics.UserStatic.FullName;
             var listView = new ListView();
             /*listView.ItemsSource = new string[]
@@ -43,8 +43,8 @@ namespace ReferenceInquiryTool.Views
             try
             {
                 CookieContainer cookies = new CookieContainer();
-                string webAddr = IpDefinition.Local + "/api/rv/get-refs/user/" +UserStatic.Id;
-                //string webAddr = IpDefinition.Dedicated + "/api/rv/get-refs/user/" +UserStatic.Id;
+                //string webAddr = IpDefinition.Local + "/api/rv/get-refs/user/" +UserStatic.Id;
+                string webAddr = IpDefinition.Dedicated + "/api/rv/get-refs/user/" +UserStatic.Id;
                 var httpWebRequest = (HttpWebRequest)WebRequest.Create(webAddr);
                 httpWebRequest.ContentType = "application/json; charset=utf-8";
                 httpWebRequest.Method = "GET";
@@ -75,7 +75,7 @@ namespace ReferenceInquiryTool.Views
                     {
                         _verificationCode.Add(item.Verifications.ReferenceNum+" - "+item.Verifications.ReferenceCode);
                     }
-                    references.ItemsSource = _verificationCode;
+                    //references.ItemsSource = _verificationCode;
                 }
             }
             catch (WebException ex)

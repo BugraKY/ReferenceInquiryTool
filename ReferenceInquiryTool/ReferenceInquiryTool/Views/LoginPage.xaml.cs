@@ -75,13 +75,15 @@ namespace ReferenceInquiryTool.Views
             UserStatic.UserName = Username.Text;
 
             string result = null;
+            string webAddrResult = "";
 
 
             try
             {
-                string webAddr = IpDefinition.Local + "/api/rv/login-post/";
-                //string webAddr = IpDefinition.Dedicated+"/api/rv/login-post/";
+                //string webAddr = IpDefinition.Local + "/api/rv/login-post/";
+                string webAddr = IpDefinition.Dedicated+"/api/rv/login-post/";
 
+                webAddrResult = webAddr;
                 var request = (HttpWebRequest)WebRequest.Create(webAddr);
 
                 request.Method = "POST";
