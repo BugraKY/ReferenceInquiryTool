@@ -26,8 +26,8 @@ namespace ReferenceInquiryTool.Services
             
             try
             {
-                //string webAddr = IpDefinition.Local+"/api/rv/query-reference/" + result+"/user/"+UserStatic.Id;
-                string webAddr =  IpDefinition.Dedicated + "/api/rv/query-reference/" + result + "/user/" + UserStatic.Id;
+                string webAddr = IpDefinition.Local+"/api/rv/query-reference/" + result+"/user/"+UserStatic.Id;
+                //string webAddr =  IpDefinition.Dedicated + "/api/rv/query-reference/" + result + "/user/" + UserStatic.Id;
                 var httpWebRequest = (HttpWebRequest)WebRequest.Create(webAddr);
                 httpWebRequest.ContentType = "application/json; charset=utf-8";
                 httpWebRequest.Method = "GET";
@@ -48,8 +48,8 @@ namespace ReferenceInquiryTool.Services
                 {
                     _verification = new Verifications()
                     {
-                        ReferenceCode = result,
-                        ReferenceNum = result
+                        CompanyReference = result,
+                        CustomerReference = result
                     };
                 }
 

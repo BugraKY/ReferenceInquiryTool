@@ -95,8 +95,8 @@ namespace ReferenceInquiryTool.Views
         }
         public void ShowResult(Verifications _verification)
         {
-            labelResult_OK.Text = _verification.ReferenceNum;
-            labelResult_NOK.Text = _verification.ReferenceNum;
+            labelResult_OK.Text = _verification.CustomerReference;
+            labelResult_NOK.Text = _verification.CompanyReference;
             layout = new StackLayout { Padding = new Thickness(5, 10) };
             if (_verification.IsException)
             {

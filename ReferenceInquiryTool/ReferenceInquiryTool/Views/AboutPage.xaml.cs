@@ -43,8 +43,8 @@ namespace ReferenceInquiryTool.Views
             try
             {
                 CookieContainer cookies = new CookieContainer();
-                //string webAddr = IpDefinition.Local + "/api/rv/get-refs/user/" +UserStatic.Id;
-                string webAddr = IpDefinition.Dedicated + "/api/rv/get-refs/user/" +UserStatic.Id;
+                string webAddr = IpDefinition.Local + "/api/rv/get-refs/user/" +UserStatic.Id;
+                //string webAddr = IpDefinition.Dedicated + "/api/rv/get-refs/user/" +UserStatic.Id;
                 var httpWebRequest = (HttpWebRequest)WebRequest.Create(webAddr);
                 httpWebRequest.ContentType = "application/json; charset=utf-8";
                 httpWebRequest.Method = "GET";
@@ -73,7 +73,7 @@ namespace ReferenceInquiryTool.Views
                 {
                     foreach (var item in _verificationEnum)
                     {
-                        _verificationCode.Add(item.Verifications.ReferenceNum+" - "+item.Verifications.ReferenceCode);
+                        _verificationCode.Add(item.Verifications.CustomerReference+" - "+item.Verifications.CompanyReference);
                     }
                     //references.ItemsSource = _verificationCode;
                 }
