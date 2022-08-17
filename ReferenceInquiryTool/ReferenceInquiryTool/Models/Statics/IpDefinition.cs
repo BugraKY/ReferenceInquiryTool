@@ -7,6 +7,9 @@ namespace ReferenceInquiryTool.Models.Statics
     public class IpDefinition
     {
         public static string Dedicated = "http://213.238.181.203";
-        public static string Local = "http://192.168.0.10:5000";
+        public static string Local = "http://192.168.0.92:5000";
+
+
+        public static string _IP = Dedicated;
     }
 }

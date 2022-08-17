@@ -15,6 +15,7 @@
 
             </Picker>
             -->
+            <!--
             <Label Text="Referans Kodu: "
                    VerticalOptions="Start"
                    HorizontalOptions="Start"
@@ -22,8 +23,8 @@
                    TextColor="Black"/>
 
             <Entry Text="" Placeholder="REF01" x:Name="referenceCode" TextColor="Black" PlaceholderColor="Gray" />
-
-            <Label Text="Referans No: "
+            -->
+            <Label Text="Referans: "
                    VerticalOptions="Start"
                    HorizontalOptions="Start"
                    FontSize="Large"/>

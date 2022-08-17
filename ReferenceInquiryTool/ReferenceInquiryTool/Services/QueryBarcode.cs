@@ -26,7 +26,7 @@ namespace ReferenceInquiryTool.Services
             
             try
             {
-                string webAddr = IpDefinition.Local+"/api/rv/query-reference/" + result+"/user/"+UserStatic.Id;
+                string webAddr = IpDefinition._IP + "/api/rv/query-reference/" + result+"/user/"+UserStatic.Id;
                 //string webAddr =  IpDefinition.Dedicated + "/api/rv/query-reference/" + result + "/user/" + UserStatic.Id;
                 var httpWebRequest = (HttpWebRequest)WebRequest.Create(webAddr);
                 httpWebRequest.ContentType = "application/json; charset=utf-8";

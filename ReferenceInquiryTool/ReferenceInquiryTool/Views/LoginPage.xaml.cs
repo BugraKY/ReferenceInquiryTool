@@ -1,4 +1,5 @@
-﻿using ReferenceInquiryTool.Models;
+﻿using Android.Content.Res;
+using ReferenceInquiryTool.Models;
 using ReferenceInquiryTool.Models.Statics;
 using ReferenceInquiryTool.ViewModels;
 using System;
@@ -20,6 +21,7 @@ namespace ReferenceInquiryTool.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class LoginPage : ContentPage
     {
+        bool success = false;
         public LoginPage()
         {
             InitializeComponent();
@@ -33,6 +35,7 @@ namespace ReferenceInquiryTool.Views
             try
             {
                 Username.Text = ReadUser();
+                //Password.Text = ReadPass();
             }
             catch (Exception)
             {
@@ -52,6 +55,7 @@ namespace ReferenceInquiryTool.Views
         private async Task<bool> FormDisable()
         {
             LoginButton.IsEnabled = false;
+            LoginButton.BackgroundColor = Color.FromHex("#2aa377");
             LoginButton.Text = "...";
             Username.IsEnabled = false;
             Password.IsEnabled = false;
@@ -60,12 +64,23 @@ namespace ReferenceInquiryTool.Views
         }
         private async Task<bool> FormEnable()
         {
+            LoginButton.Text = "Çıkış yapılıyor..";
+            await Task.Delay(2500);
+            LoginButton.IsEnabled = true;
+            LoginButton.Text = "GİRİŞ";
+            Username.IsEnabled = true;
+            Password.IsEnabled = true;
+            //Password.Text = "";
+            return true;
+        }
+        private async Task<bool> FormUserFail()
+        {
+            LoginButton.Text = "Şifre doğru değil..";
             await Task.Delay(1000);
             LoginButton.IsEnabled = true;
             LoginButton.Text = "GİRİŞ";
             Username.IsEnabled = true;
             Password.IsEnabled = true;
-            Password.Text = "";
             return true;
         }
         private async void LoginPostAsync()
@@ -76,11 +91,11 @@ namespace ReferenceInquiryTool.Views
 
             string result = null;
             string webAddrResult = "";
-
+            
 
             try
             {
-                string webAddr = IpDefinition.Local + "/api/rv/login-post/";
+                string webAddr = IpDefinition._IP + "/api/rv/login-post/";
                 //string webAddr = IpDefinition.Dedicated+"/api/rv/login-post/";
 
                 webAddrResult = webAddr;
@@ -104,7 +119,11 @@ namespace ReferenceInquiryTool.Views
 
                 }
                 if (result == null || result == "")
+                {
+                    success = false;
                     await DisplayAlert("Kimlik doğrulama", "Kullanıcı adı veya şifre geçerli değil.", "Tamam");
+                }
+
                 else
                 {
                     using (var ms = new MemoryStream(Encoding.Unicode.GetBytes(result)))
@@ -119,12 +138,18 @@ namespace ReferenceInquiryTool.Views
                     UserStatic.Active = _user.Active;
 
                     if (UserStatic.Active)
+                    {
+                        success = true;
                         await Navigation.PushModalAsync(new AppTabbed());
+
+                    }
                     else
+                    {
+                        success = false;
                         await DisplayAlert("Kimlik doğrulama", "Kullanıcı dondurulmuş. Bunun doğru olmadığını düşünüyor ve aktif personelseniz lütfen IK ile iletişime geçiniz.", "Tamam");
-                    //WriteXML(UserStatic.UserName);
-                    //WriteXML(UserStatic.UserName);
+                    }
                     WriteUser(UserStatic.UserName);
+                    //WritePass(Password.Text);
                 }
 
             }
@@ -132,25 +157,41 @@ namespace ReferenceInquiryTool.Views
             {
                 await DisplayAlert("Hata", ex.Message, "tamam");
             }
-
-            await FormEnable();
+            if (success)
+                await FormEnable();
+            else
+                await FormUserFail();
 
             //await Navigation.PushModalAsync(new AppTabbed());
         }
 
         private void WriteUser(string username)
         {
-            Password.Text = "";
             var documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
             var filePath = Path.Combine(documentsPath, "username.exp");
             File.WriteAllText(filePath, username);
             //username için txt yapılabilir.
         }
+        /*
+        private void WritePass(string password)
+        {
+            var documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+            var filePath = Path.Combine(documentsPath, "dda.exp");
+            File.WriteAllText(filePath, password);
+            //password için txt yapılabilir.
+        }*/
         private string ReadUser()
         {
             var documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
             var filePath = Path.Combine(documentsPath, "username.exp");
             return File.ReadAllText(filePath);
         }
+        /*
+        private string ReadPass()
+        {
+            var documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+            var filePath = Path.Combine(documentsPath, "dda.exp");
+            return File.ReadAllText(filePath);
+        }*/
     }
 }

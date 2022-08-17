@@ -31,16 +31,20 @@ namespace ReferenceInquiryTool.Views
         }
 
         private async void Button_Clicked(object sender, EventArgs e)
-        {
+        {/*
             if (referenceCode.Text == "" && referenceNum.Text == "")
             {
                 await DisplayAlert("", "Referans kodu veya referans numaralarından biri girilmeli.", "Tamam");
+            }*/
+            if (referenceNum.Text == "")
+            {
+                await DisplayAlert("", "Referans numarası girilmeli.", "Tamam");
             }
             else
             {
                 Verifications _verification = new Verifications()
                 {
-                    CompanyReference = referenceCode.Text,
+                    //CompanyReference = referenceCode.Text,
                     CustomerReference = referenceNum.Text
                 };
                 if (_verification.CompanyReference == "")
@@ -55,7 +59,7 @@ namespace ReferenceInquiryTool.Views
                 try
                 {
                     //string webAddr = IpDefinition.Local + "/api/rv/query-manual/code/" + _verification.ReferenceCode + "/num/" + _verification.ReferenceNum + "/user/" + UserStatic.Id;
-                    string webAddr = IpDefinition.Dedicated + "/api/rv/query-manual/code/" + _verification.CompanyReference + "/num/" + _verification.CustomerReference + "/user/" + UserStatic.Id;
+                    string webAddr = IpDefinition._IP + "/api/rv/query-manual/code/" + _verification.CompanyReference + "/num/" + _verification.CustomerReference + "/user/" + UserStatic.Id;
                     var httpWebRequest = (HttpWebRequest)WebRequest.Create(webAddr);
                     httpWebRequest.ContentType = "application/json; charset=utf-8";
                     httpWebRequest.Method = "GET";
@@ -76,7 +80,7 @@ namespace ReferenceInquiryTool.Views
                     {
                         _verification = new Verifications()
                         {
-                            CompanyReference = referenceCode.Text,
+                            //CompanyReference = referenceCode.Text,
                             CustomerReference = referenceNum.Text
                         };
                     }

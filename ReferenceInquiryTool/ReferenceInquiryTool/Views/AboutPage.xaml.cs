@@ -43,7 +43,7 @@ namespace ReferenceInquiryTool.Views
             try
             {
                 CookieContainer cookies = new CookieContainer();
-                string webAddr = IpDefinition.Local + "/api/rv/get-refs/user/" +UserStatic.Id;
+                string webAddr = IpDefinition._IP + "/api/rv/get-refs/user/" +UserStatic.Id;
                 //string webAddr = IpDefinition.Dedicated + "/api/rv/get-refs/user/" +UserStatic.Id;
                 var httpWebRequest = (HttpWebRequest)WebRequest.Create(webAddr);
                 httpWebRequest.ContentType = "application/json; charset=utf-8";
