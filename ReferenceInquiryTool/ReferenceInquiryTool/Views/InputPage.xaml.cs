@@ -47,10 +47,11 @@ namespace ReferenceInquiryTool.Views
                     //CompanyReference = referenceCode.Text,
                     CustomerReference = referenceNum.Text
                 };
+                /*
                 if (_verification.CompanyReference == "")
                     _verification.CompanyReference = 0.ToString();
                 if (_verification.CustomerReference == "")
-                    _verification.CustomerReference = 0.ToString();
+                    _verification.CustomerReference = 0.ToString();*/
 
 
 
@@ -58,8 +59,7 @@ namespace ReferenceInquiryTool.Views
 
                 try
                 {
-                    //string webAddr = IpDefinition.Local + "/api/rv/query-manual/code/" + _verification.ReferenceCode + "/num/" + _verification.ReferenceNum + "/user/" + UserStatic.Id;
-                    string webAddr = IpDefinition._IP + "/api/rv/query-manual/code/" + _verification.CompanyReference + "/num/" + _verification.CustomerReference + "/user/" + UserStatic.Id;
+                    string webAddr = IpDefinition._IP + "/api/rv/query-manual/code/0/num/" +_verification.CustomerReference+"/user/" + UserStatic.Id;
                     var httpWebRequest = (HttpWebRequest)WebRequest.Create(webAddr);
                     httpWebRequest.ContentType = "application/json; charset=utf-8";
                     httpWebRequest.Method = "GET";
