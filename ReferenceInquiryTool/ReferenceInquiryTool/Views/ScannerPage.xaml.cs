@@ -37,17 +37,22 @@ namespace ReferenceInquiryTool.Views
 
             zxing.OnScanResult += (result) =>
             {
-                var eh = this.OnScanResult;
-                if (eh != null)
-                    eh(result);
-                if (result != null)
+                var partno = result.Text.Substring(0, 1);
+                if (result.Text.Length > 9 && result.Text.Length < 12 && partno == "P")
                 {
-                    zxing.IsScanning = false;
-                    defaultOverlay.TopText = "Barkod tespit edildi.";
-                    defaultOverlay.BottomText = "Bir kaç saniye bekleyiniz. Kontrol ediliyor..";
-                    _verification = QueryBarcode.Where(result.Text);
+                    var eh = this.OnScanResult;
+                    if (eh != null)
+                        eh(result);
+                    if (result != null)
+                    {
+                        zxing.IsScanning = false;
+                        defaultOverlay.TopText = "Barkod tespit edildi.";
+                        defaultOverlay.BottomText = "Bir kaç saniye bekleyiniz. Kontrol ediliyor..";
+                        _verification = QueryBarcode.Where(result.Text);
+                    }
+
+                    Device.BeginInvokeOnMainThread(async () => await Navigation.PushModalAsync(new ResultPage(_verification)));
                 }
-                Device.BeginInvokeOnMainThread(async () => await Navigation.PushModalAsync(new ResultPage(_verification)));
 
             };
 

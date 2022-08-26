@@ -10,6 +10,6 @@ namespace ReferenceInquiryTool.Models.Statics
         public static string Local = "http://192.168.0.92:5000";
 
 
-        public static string _IP = Local;
+        public static string _IP = Dedicated;
     }
 }
