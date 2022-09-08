@@ -45,7 +45,7 @@ namespace ReferenceInquiryTool.Views
                 Verifications _verification = new Verifications()
                 {
                     //CompanyReference = referenceCode.Text,
-                    CustomerReference = referenceNum.Text
+                    Reference = referenceNum.Text
                 };
                 /*
                 if (_verification.CompanyReference == "")
@@ -59,7 +59,7 @@ namespace ReferenceInquiryTool.Views
 
                 try
                 {
-                    string webAddr = IpDefinition._IP + "/api/rv/query-manual/code/0/num/" +_verification.CustomerReference+"/user/" + UserStatic.Id;
+                    string webAddr = IpDefinition._IP + "/api/rv/query-manual/code/0/num/" +_verification.Reference + "/user/" + UserStatic.Id;
                     var httpWebRequest = (HttpWebRequest)WebRequest.Create(webAddr);
                     httpWebRequest.ContentType = "application/json; charset=utf-8";
                     httpWebRequest.Method = "GET";
@@ -81,7 +81,7 @@ namespace ReferenceInquiryTool.Views
                         _verification = new Verifications()
                         {
                             //CompanyReference = referenceCode.Text,
-                            CustomerReference = referenceNum.Text
+                            Reference = referenceNum.Text
                         };
                     }
                 }

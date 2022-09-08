@@ -49,7 +49,7 @@ namespace ReferenceInquiryTool.Services
                     _verification = new Verifications()
                     {
                         CompanyReference = result,
-                        CustomerReference = result
+                        Reference = result
                     };
                 }
 

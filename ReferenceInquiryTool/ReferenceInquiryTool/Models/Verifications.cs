@@ -9,7 +9,7 @@ namespace ReferenceInquiryTool.Models
     {
         public string Id { get; set; }
         public string CompanyReference { get; set; }
-        public string CustomerReference { get; set; }
+        public string Reference { get; set; }
         public bool Active { get; set; }
         public string ActiveSTR { get; set; }
         public Guid CompanyId { get; set; }

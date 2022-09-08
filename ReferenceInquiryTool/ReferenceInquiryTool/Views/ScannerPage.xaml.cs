@@ -38,7 +38,7 @@ namespace ReferenceInquiryTool.Views
             zxing.OnScanResult += (result) =>
             {
                 var partno = result.Text.Substring(0, 1);
-                if (result.Text.Length > 9 && result.Text.Length < 12 && partno == "P")
+                if (result.Text.Length > 10 && result.Text.Length < 13)
                 {
                     var eh = this.OnScanResult;
                     if (eh != null)

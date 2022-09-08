@@ -73,7 +73,7 @@ namespace ReferenceInquiryTool.Views
                 {
                     foreach (var item in _verificationEnum)
                     {
-                        _verificationCode.Add(item.Verifications.CustomerReference+" - "+item.Verifications.CompanyReference);
+                        _verificationCode.Add(item.Verifications.Reference + " - "+item.Verifications.CompanyReference);
                     }
                     //references.ItemsSource = _verificationCode;
                 }
