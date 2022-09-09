@@ -12,6 +12,8 @@ namespace ReferenceInquiryTool.Models
         public string Reference { get; set; }
         public bool Active { get; set; }
         public string ActiveSTR { get; set; }
+        public bool Auth { get; set; }
+        public bool Valid { get; set; }
         public Guid CompanyId { get; set; }
         public Company Company { get; set; }
         public bool IsException { get; set; }
