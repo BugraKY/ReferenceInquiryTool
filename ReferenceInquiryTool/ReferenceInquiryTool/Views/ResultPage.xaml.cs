@@ -21,7 +21,7 @@ namespace ReferenceInquiryTool.Views
         Label label_OK = new Label
         {
             Text = "/!\\ OK /!\\",
-            TextColor = Color.FromHex(green),
+            //TextColor = Color.FromHex(green),
             FontSize = 30,
             Padding = new Thickness(0, 100, 0, 0),
             VerticalOptions = LayoutOptions.Start,
@@ -30,34 +30,56 @@ namespace ReferenceInquiryTool.Views
         Label label_NOK = new Label
         {
             Text = "/!\\ DİKKAT /!\\",
-            TextColor = Color.FromHex(yellow),
+            //TextColor = Color.FromHex(yellow),
             FontSize = 30,
             Padding = new Thickness(0, 100, 0, 0),
             VerticalOptions = LayoutOptions.Start,
             HorizontalOptions = LayoutOptions.Center
         };
-        Label label_UnTrained = new Label
+        Label labelReference_OK = new Label
         {
-            Text = "/!\\ DİKKAT /!\\",
-            TextColor = Color.FromHex(red),
+            Text = "· Referans ✓",
+            //TextColor = Color.FromHex(green),
             FontSize = 30,
-            Padding = new Thickness(0, 100, 0, 0),
+            FontAttributes = FontAttributes.Bold,
+            Padding = new Thickness(115, 50, 0, 0),
             VerticalOptions = LayoutOptions.Start,
-            HorizontalOptions = LayoutOptions.Center
+            HorizontalOptions = LayoutOptions.StartAndExpand
         };
-        Label labelMatches_OK = new Label
+        Label labelReference_NOK = new Label
         {
-            Text = "Eşleşiyor.",
-            TextColor = Color.FromHex(green),
+            Text = "· Referans X",
+            //TextColor = Color.FromHex(green),
             FontSize = 30,
-            Padding = new Thickness(0, 50, 0, 0),
+            FontAttributes = FontAttributes.Bold,
+            Padding = new Thickness(115, 50, 0, 0),
             VerticalOptions = LayoutOptions.Start,
-            HorizontalOptions = LayoutOptions.Center
+            HorizontalOptions = LayoutOptions.StartAndExpand
+        };
+        Label labelTraining_OK = new Label
+        {
+            Text = "· Eğitim ✓",
+            //TextColor = Color.FromHex(green),
+            FontSize = 30,
+            FontAttributes = FontAttributes.Bold,
+            Padding = new Thickness(115, 15, 0, 0),
+            VerticalOptions = LayoutOptions.Start,
+            HorizontalOptions = LayoutOptions.StartAndExpand
+        };
+        Label labelTraining_NOK = new Label
+        {
+            Text = "· Eğitim X",
+            //TextColor = Color.FromHex(green),
+            FontSize = 30,
+            FontAttributes = FontAttributes.Bold,
+            Padding = new Thickness(115, 15, 0, 0),
+            VerticalOptions = LayoutOptions.Start,
+            HorizontalOptions = LayoutOptions.StartAndExpand
         };
         Label labelMatches_NOK = new Label
         {
-            Text = "Bu referans listenizde yok.",
-            TextColor = Color.FromHex(yellow),
+            Text = "Kontrol Etme",
+            //TextColor = Color.FromHex(yellow),
             FontSize = 30,
             Padding = new Thickness(0, 50, 0, 0),
             VerticalOptions = LayoutOptions.Start,
@@ -65,58 +87,66 @@ namespace ReferenceInquiryTool.Views
         };
         Label labelMatches_UnTrained = new Label
         {
-            Text = "Bu referansta eğitiminiz yok",
-            TextColor = Color.FromHex(red),
+            Text = "     Bu Referansta\n Eğitim Kaydın Yok",
+            //TextColor = Color.FromHex(red),
             FontSize = 30,
-            Padding = new Thickness(0, 50, 0, 0),
-            VerticalOptions = LayoutOptions.Start,
-            HorizontalOptions = LayoutOptions.Center
+            VerticalOptions = LayoutOptions.CenterAndExpand,
+            HorizontalOptions = LayoutOptions.CenterAndExpand
         };
+        Label labelMatches_UnTrained2 = new Label
+        {
+            Text = "Eğitim Kaydın Yok",
+            //TextColor = Color.FromHex(red),
+            FontSize = 30,
+            VerticalOptions = LayoutOptions.Start,
+            HorizontalOptions = LayoutOptions.CenterAndExpand
+        };
+        
         Label labelCheck_OK = new Label
         {
-            Text = "Kontrol et.",
-            TextColor = Color.FromHex(green),
+            Text = "Referansı Kontrol \n       Edebilirsin",
+            //TextColor = Color.FromHex(green),
             FontSize = 30,
-            VerticalOptions = LayoutOptions.StartAndExpand,
+            VerticalOptions = LayoutOptions.CenterAndExpand,
             HorizontalOptions = LayoutOptions.CenterAndExpand
         };
         Label labelCheck_NOK = new Label
         {
-            Text = "Kontrol etme.",
-            TextColor = Color.FromHex(yellow),
+            Text = "Referans Geçerli\n         Değil",
+            //TextColor = Color.FromHex(yellow),
             FontSize = 30,
-            VerticalOptions = LayoutOptions.StartAndExpand,
+            VerticalOptions = LayoutOptions.CenterAndExpand,
             HorizontalOptions = LayoutOptions.CenterAndExpand
         };
         Label labelCheck_UnTrained = new Label
         {
-            Text = "Kontrol etme.",
-            TextColor = Color.FromHex(red),
+            Text = "Referansı Kontrol\n          Etme",
+            //TextColor = Color.FromHex(red),
             FontSize = 30,
-            VerticalOptions = LayoutOptions.StartAndExpand,
+            VerticalOptions = LayoutOptions.CenterAndExpand,
             HorizontalOptions = LayoutOptions.CenterAndExpand
         };
         Label labelResult_OK = new Label
         {
             Text = "",
-            TextColor = Color.FromHex(green),
-            FontSize = 20,
+            //TextColor = Color.FromHex(green),
+            FontSize = 30,
             VerticalOptions = LayoutOptions.CenterAndExpand,
             HorizontalOptions = LayoutOptions.CenterAndExpand
         };
         Label labelResult_NOK = new Label
         {
             Text = "",
-            TextColor = Color.FromHex(yellow),
-            FontSize = 20,
+            //TextColor = Color.FromHex(yellow),
+            FontSize = 30,
             VerticalOptions = LayoutOptions.CenterAndExpand,
             HorizontalOptions = LayoutOptions.CenterAndExpand
         };
         Label labelResult_UnTrained = new Label
         {
             Text = "",
-            TextColor = Color.FromHex(red),
-            FontSize = 20,
+            //TextColor = Color.FromHex(red),
+            FontSize = 30,
             VerticalOptions = LayoutOptions.CenterAndExpand,
             HorizontalOptions = LayoutOptions.CenterAndExpand
         };
@@ -145,24 +175,33 @@ namespace ReferenceInquiryTool.Views
                 if (_verification.Valid == false)
                 {
                     layout.Children.Add(label_NOK);
-                    layout.Children.Add(labelMatches_NOK);
+                    layout.Children.Add(labelReference_NOK);
                     layout.Children.Add(labelCheck_NOK);
+                    layout.Children.Add(labelMatches_NOK);
                     layout.Children.Add(labelResult_NOK);
+                    layout.BackgroundColor = Color.FromHex(red);
 
                 }
                 else if (_verification.Active && _verification.Valid)
                 {
                     layout.Children.Add(label_OK);
-                    layout.Children.Add(labelMatches_OK);
+                    layout.Children.Add(labelReference_OK);
+                    layout.Children.Add(labelTraining_OK);
                     layout.Children.Add(labelCheck_OK);
                     layout.Children.Add(labelResult_OK);
+                    layout.BackgroundColor = Color.FromHex(green);
                 }
                 else
                 {
-                    layout.Children.Add(label_UnTrained);
+                    //layout.Children.Add(label_UnTrained);
+                    layout.Children.Add(label_NOK);
+                    layout.Children.Add(labelReference_OK);
+                    layout.Children.Add(labelTraining_NOK);
                     layout.Children.Add(labelMatches_UnTrained);
+                    //layout.Children.Add(labelMatches_UnTrained2);
                     layout.Children.Add(labelCheck_UnTrained);
                     layout.Children.Add(labelResult_UnTrained);
+                    layout.BackgroundColor = Color.FromHex(red);
                 }
             }
             this.Content = layout;

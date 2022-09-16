@@ -5,7 +5,7 @@
             xmlns:local="clr-namespace:ReferenceInquiryTool.Views"
             BarBackgroundColor="{StaticResource Primary}"
             SelectedTabColor="White"
-            UnselectedTabColor="Gray"
+            UnselectedTabColor="Black"
             BackgroundColor="White">
     <!--Pages can be added as references or inline-->
 

@@ -29,7 +29,7 @@
                    HorizontalOptions="Start"
                    FontSize="Large"/>
 
-            <Entry Text="" Placeholder="99999999" x:Name="referenceNum" TextColor="Black" PlaceholderColor="Gray"/>
+            <Entry Text="" Placeholder="Referans Manuel Giriş" x:Name="referenceNum" TextColor="Black" PlaceholderColor="Gray"/>
             <Button Text="Sorgula" Clicked="Button_Clicked"/>
         </StackLayout>
     </ContentPage.Content>

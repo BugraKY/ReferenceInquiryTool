@@ -49,7 +49,13 @@ namespace ReferenceInquiryTool.Views
                         defaultOverlay.TopText = "Barkod tespit edildi.";
                         defaultOverlay.BottomText = "Bir kaç saniye bekleyiniz. Kontrol ediliyor..";
                         _verification = QueryBarcode.Where(result.Text);
-                    }
+                    }/*
+                    if (_verification.Active == false)
+                    {
+                        _verification.Valid = false;
+                        _verification.Auth = false;
+                        _verification.Reference = null;
+                    }*/
 
                     Device.BeginInvokeOnMainThread(async () => await Navigation.PushModalAsync(new ResultPage(_verification)));
                 }

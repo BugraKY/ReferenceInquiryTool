@@ -23,6 +23,9 @@
 
             <Entry Placeholder="Şifre" IsPassword="True" PlaceholderColor="Gray" VerticalOptions="Center" x:Name="Password" />
             <Button VerticalOptions="Center" Text="Giriş" Clicked="Button_Clicked" x:Name="LoginButton"/>
+
+            <Label Text="Referans ve Eğitim Kayıt" VerticalOptions="Center" x:Name="AppNameLabel" TextColor="Black" FontSize="30" Padding="40,200,0,0"></Label>
+            <Label Text="Uygulaması" VerticalOptions="Center" x:Name="AppNameLabelunder" TextColor="Black" FontSize="30" Padding="115,0,0,0"></Label>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
